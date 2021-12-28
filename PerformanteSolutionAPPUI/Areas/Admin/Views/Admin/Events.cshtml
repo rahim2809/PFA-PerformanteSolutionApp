@@ -1,0 +1,157 @@
+﻿@model IEnumerable<BOL.AspNetEvent>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Evenements</span>
+                    <h1 class="text-capitalize mb-5 text-lg">Gestion Des Evenements</h1>   
+
+                    <!-- <ul class="list-inline breadcumb-nav">
+                      <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                      <li class="list-inline-item"><span class="text-white">/</span></li>
+                      <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function confirmDelete() {
+        return confirm('Etes vous sûr d aller au terme de cette suppression ???');
+    }
+</script>
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Events", "Admin", new { area = "Admin" }))
+            {
+
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Chercher", new { @class = "col-md-2 control-label" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            @Html.TextBox("searchTxt", null, new { @class = "form-control", @placeholder = "Saisir ce que vous souhaitez chercher", @style = "max-width:100%" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span>Chercher</button>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table ">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            Evenement
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Organisateur)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Statut)
+                        </th>
+                        <th></th>
+                        
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Statut == "Validated")
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomEvent)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Organisateur)
+                                </td>
+
+
+                                <td>
+                                    <i style="color:green;" class="fas fa-check"></i>
+                                </td>
+                                <td align="center">
+                                    @Html.ActionLink("Devalider", "UnValidateEvent", "Admin", new { area = "Admin", id = item.EventId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Supprimer", "DeleteEvent", "Admin", new { Area = "Admin", id = item.EventId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+
+                    }
+                    else
+                    {
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomEvent)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Organisateur)
+                                </td>
+
+
+                                <td>
+                                    <i style="color:red;" color class="fas fa-times"></i>
+                                </td>
+                                
+                                <td align="center">
+                                    @Html.ActionLink("Valider", "ValidateEvent", "Admin", new { area = "Admin", id = item.EventId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Supprimer", "DeleteEvent", "Admin", new { Area = "Admin", id = item.EventId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    }
+
+
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

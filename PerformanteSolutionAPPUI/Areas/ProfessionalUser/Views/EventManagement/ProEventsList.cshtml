@@ -1,0 +1,164 @@
+﻿@model IEnumerable<BOL.AspNetEvent>
+
+@{
+    ViewBag.Title = "ValidatedEventList";
+    Layout = "~/Views/Shared/_ProfessionalUserLayout.cshtml";
+}
+
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Evenements</span>
+                    <h1 class="text-capitalize mb-5 text-lg">La Liste Des Evenements</h1> 
+
+                    <!-- <ul class="list-inline breadcumb-nav">
+                      <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                      <li class="list-inline-item"><span class="text-white">/</span></li>
+                      <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div> 
+</section>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this record ???');
+    }
+</script>
+
+<br />
+
+<h3>@Html.ActionLink("Soumettre Un Nouveau", "CreateEvent", new { controller = "EventManagement", area = "ProfessionalUser" })</h3>
+
+<br />
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">
+        <strong>Empty! </strong>@ViewBag.Message
+    </div>
+}
+
+<div class="container"> 
+    <div class="row">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("ProEventsList", "EventManagement", new { area = "ProfessionalUser" }))
+            {
+
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Chercher", new { @class = "col-md-2 control-label" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            @Html.TextBox("searchTxt", null, new { @class = "form-control", @placeholder = "Veuillez saisir ce que vous cherchez", @style = "max-width:100%" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span>Chercher</button>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+        
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table ">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            Evenement
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Organisateur)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Statut)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Statut == "Validated")
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomEvent)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Organisateur)
+                                </td>
+                                    
+                                <td>
+                                    <i style="color:green;" class="fas fa-check"></i>
+                                </td>
+                                <td align="center">
+                                    @Html.ActionLink("Editions", "EventListEditions", "EditionManagement", new { area = "ProfessionalUser", id = item.EventId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Nouvelle Edition", "CreateEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EventId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                </td>
+
+                            </tr>
+                        </tbody>
+                       
+                          
+                    }
+                    else
+                    {
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomEvent)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Organisateur)
+                                </td>
+                                    
+                                <td>
+                                    <i style="color:red;" color class="fas fa-times"></i>
+                                </td>
+
+                                <td align="center" >
+                                    @Html.ActionLink("Modifier", "EditEvent", "EventManagement", new { area = "ProfessionalUser", id = item.EventId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Supprimer", "DeleteEvent", "EventManagement", new { area = "ProfessionalUser", id = item.EventId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                </td>
+
+                            </tr>
+                        </tbody> 
+
+
+                        
+
+                    }
+
+
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

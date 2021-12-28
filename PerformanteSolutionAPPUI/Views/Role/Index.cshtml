@@ -1,0 +1,95 @@
+﻿@model IEnumerable<PerformanteSolutionAppUI.Models.RoleViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Roles</span>
+                    <h1 class="text-capitalize mb-5 text-lg">Gérer les roles</h1>
+
+                    <!-- <ul class="list-inline breadcumb-nav">
+                      <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                      <li class="list-inline-item"><span class="text-white">/</span></li>
+                      <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+
+<h2>@Html.ActionLink("Nouveau Role", "Create")</h2>
+
+<script>
+
+    function confirmDelete() {
+        return confirm('Etes vous sur de voulir Continuez ???');
+    }
+</script>
+
+<br />
+<br />
+
+
+<div class="container">
+
+   
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table ">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            
+                            <td align="center">
+                                @Html.ActionLink("Modifier", "Edit", new { area = "", id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" }) |
+                                @Html.ActionLink("Supprimer", "Delete", new { area = "", id = item.Id }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                            </td>
+                        </tr>
+                    </tbody>
+
+
+                }
+
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,182 @@
+﻿@model IEnumerable<BOL.AspNetEdition>
+
+@{
+    ViewBag.Title = "EventListEditions";
+    Layout = "~/Views/Shared/_ProfessionalUserLayout.cshtml";
+}
+
+<script>
+
+    function confirmDelete() {
+        return confirm('Etes vous sur de vouloir Continuez ???');
+    }
+</script>
+
+<br />
+<br />
+
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Editions</span>
+                    <h1 class="text-capitalize mb-5 text-lg">Liste Editions</h1>
+
+                    <!-- <ul class="list-inline breadcumb-nav">
+                      <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                      <li class="list-inline-item"><span class="text-white">/</span></li>
+                      <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table ">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            NomEdition
+                        </th>
+
+                        <th>
+                            Validité
+                        </th>
+
+                        <th>
+                            Actif
+                        </th>
+
+                        <th></th>
+
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Statut == "NotValidatedYet")
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomEdition)
+                                </td>
+
+                                <td>
+                                    <i style="color:red;" color class="fas fa-times"></i>
+                                </td>
+
+                                <td>
+                                    <i style="color:red;" color class="fas fa-times"></i>
+                                </td>
+
+                                <td align="center">
+                                    @Html.ActionLink("Edit", "EditEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                    @Html.ActionLink("Detail", "DetailEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                    @Html.ActionLink("Delete", "DeleteEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+
+
+
+
+                    }
+                    else
+                    {
+                        if (item.Actif == "FALSE")
+                        {
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NomEdition)
+                                    </td>
+
+
+                                    <td>
+                                        <i style="color:green;" class="fas fa-check"></i>
+                                    </td>
+
+                                    <td>
+                                        <i style="color:red;" color class="fas fa-times"></i>
+                                    </td>
+
+                                    <td align="center">
+                                        @Html.ActionLink("Edit", "EditEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                        @Html.ActionLink("Detail", "DetailEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                        @Html.ActionLink("Delete", "DeleteEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        }
+
+                        else
+                        {
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NomEdition)
+                                    </td>
+
+                                    <td>
+                                        <i style="color:green;" class="fas fa-check"></i>
+                                    </td>
+
+                                    <td>
+                                        <i style="color:green;" class="fas fa-check"></i>
+                                    </td>
+
+                                    <td align="center">
+                                        @Html.ActionLink("Edit", "EditEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                        @Html.ActionLink("Detail", "DetailEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                        @Html.ActionLink("Delete", "DeleteEdition", "EditionManagement", new { area = "ProfessionalUser", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+
+                        }
+
+                    }
+
+
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

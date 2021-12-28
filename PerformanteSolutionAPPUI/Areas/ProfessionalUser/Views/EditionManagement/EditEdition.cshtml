@@ -1,0 +1,124 @@
+﻿@model BOL.AspNetEdition
+
+@{
+    ViewBag.Title = "EditEdition";
+    Layout = "~/Views/Shared/_ProfessionalUserLayout.cshtml";
+}
+
+
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Modifier</span>
+                    <h1 class="text-capitalize mb-5 text-lg">Modifier Une Edition</h1>
+
+                    <!-- <ul class="list-inline breadcumb-nav">
+                      <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                      <li class="list-inline-item"><span class="text-white">/</span></li>
+                      <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+            @using (Html.BeginForm("EditEdition", "EditionManagement", FormMethod.Post, new { area = "ProfessionalUser", @enctype = "multipart/form-data" }))
+            {
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.EditionId)
+                @Html.HiddenFor(m => m.EvId)
+                @Html.HiddenFor(m => m.PhotoPath)
+
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        <div>
+                            <input type="file" id="myfile" name="fichierImage">
+                            <img src="@Url.Content(Model.EventPhoto1)" class="img-responsive" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    @Html.Label("Nom Edition")
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.NomEdition, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NomEdition, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    @Html.Label("Date Debut")
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.DateDebut, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DateDebut, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    @Html.Label("Date Fin")
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.DateFin, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DateFin, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        </div>
+
+
+                        <div class="text-center">
+                            <input class="btn btn-main btn-round-full" name="submit" type="submit" value="Modifier" />
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+<br />
+
+
+
+

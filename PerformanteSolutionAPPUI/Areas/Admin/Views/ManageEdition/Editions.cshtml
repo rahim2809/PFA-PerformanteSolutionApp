@@ -1,0 +1,228 @@
+﻿@model IEnumerable<BOL.ViewModels.EditionViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Editions</span> 
+                    <h1 class="text-capitalize mb-5 text-lg">Liste Des Editions</h1> 
+
+                    <!-- <ul class="list-inline breadcumb-nav">
+                      <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                      <li class="list-inline-item"><span class="text-white">/</span></li>
+                      <li class="list-inline-item"><a href="#" class="text-white-50">Our services</a></li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+
+<script>
+    function confirmDelete() {
+        return confirm('Etes vous sur de vouloir Continuez ???'); 
+    }
+</script>
+
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Editions", "ManageEdition", new { area = "Admin" }))
+            {
+
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            @Html.Label("Chercher", new { @class = "col-md-2 control-label" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="form-group">
+                            @Html.TextBox("searchTxt", null, new { @class = "form-control", @placeholder = " Veuillez saisir ce que vous rechercher", @style = "max-width:100%" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span>Chercher</button>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table ">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            NomEdition
+                        </th>
+
+                        <th>
+                            Nom Evenement
+                        </th>
+
+                        <th>
+                            Validité
+                        </th>
+
+                        <th>
+                            Actif
+                        </th>
+
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Statut == "NotValidatedYet")
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomEdition)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomEvent)
+                                </td>
+
+                                <td>
+                                    <i style="color:red;" color class="fas fa-times"></i>
+                                </td>
+
+                                <td>
+                                    <i style="color:red;" color class="fas fa-times"></i>
+                                </td>
+
+                                <td align="center">
+                             
+                                    @Html.ActionLink("Valider", "ValidateEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                    @Html.ActionLink("Detail", "DetailEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Supprimer", "DeleteEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+
+
+
+
+                    }
+                    else
+                    {
+                        if (item.Actif == "FALSE")
+                        {
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NomEdition)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NomEvent)
+                                    </td>
+
+
+                                    <td>
+                                        <i style="color:green;" class="fas fa-check"></i>
+                                    </td>
+
+                                    <td>
+                                        <i style="color:red;" color class="fas fa-times"></i>
+                                    </td>
+
+                                    <td align="center">
+                                        @Html.ActionLink("Activer", "OnEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })|
+                                        @Html.ActionLink("Detail", "DetailEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary"})
+                                        @Html.ActionLink("Supprimer", "DeleteEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        }
+
+                        else
+                        {
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NomEdition)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NomEvent)
+                                    </td>
+
+                                    <td>
+                                        <i style="color:green;" class="fas fa-check"></i>
+                                    </td>
+
+                                    <td>
+                                        <i style="color:green;" class="fas fa-check"></i>
+                                    </td>
+
+                                    <td align="center">
+                                        @Html.ActionLink("Desactiver", "OffEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                        @Html.ActionLink("Detail", "DetailEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                        @Html.ActionLink("Supprimer", "DeleteEdition", "ManageEdition", new { Area = "Admin", id = item.EditionId }, htmlAttributes: new { @class = "btn btn-danger", onclick = "return confirmDelete()" })
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+
+                        }
+
+                    }
+
+
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
